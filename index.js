@@ -15,7 +15,7 @@ app.use('/',assignmentRoutes);
 app.use('/',healthCheckRoutes);
 app.use((req, res) => {
     res.setHeader('Cache-control' ,'no-cache');
-    res.status(404).send("Not found");
+    res.status(404).send({message:"Not found"});
   });
 
 

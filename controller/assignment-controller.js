@@ -57,11 +57,7 @@ const createAssignment = async(req, res) => {
         },
       })
       console.log(account.id)
-      const assignment = await Assignment.findAll({
-        where: {
-          user_id:account.id,
-        }
-      })
+      const assignment = await Assignment.findAll()
       console.log("Filter Assignment:",assignment);
       //if (assignment.length === 0) return res.status(200).send(assignment)
       const result = assignment.map((ac) => {
@@ -110,7 +106,6 @@ const createAssignment = async(req, res) => {
       const assignment = await Assignment.findOne({
         where: {
           id: req.params.id,
-          user_id:account.id,
         }
       })
       console.log("assignmrnt",assignment);
