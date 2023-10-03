@@ -11,7 +11,7 @@ const validateRoute = (req, res, next) => {
   if (validRoutePattern.test(req.path)) {
     next();
   } else {
-    res.status(404).send('Not Found');
+    res.status(404).send({message:"Not found"});
   }
 };
 
