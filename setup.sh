@@ -20,6 +20,6 @@ nodejs -v
 
 
 sudo mkdir webapp
-sudo cp /tmp/webapp.zip /home/admin/webapp/webapp.zip
+sudo cp /webapp.zip /home/admin/webapp/webapp.zip
 cd /home/admin/webapp/
 unzip webapp.zip
