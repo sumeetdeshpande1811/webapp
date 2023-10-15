@@ -19,6 +19,12 @@ jobs:
       - name: Checkout code
 
         uses: actions/checkout@v2
+      
+
+       - name: Step 2 - zip all the webapp files
+        run: |
+          zip -r webapp.zip ./
+          pwd ./webapp
 
  
 
