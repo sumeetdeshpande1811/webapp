@@ -46,6 +46,9 @@ jobs:
 
         run: packer init ami.pkr.hcl
 
+      - name: Packer format
+        run: packer fmt .
+
  
 
       - name: Validate Packer Template
