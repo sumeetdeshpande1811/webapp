@@ -25,7 +25,9 @@ echo "+-------------------------------------------------------------------------
 
 ls 
 
-mkdir web1
-unzip webapp.zip -d web1
+ALTER USER postgres WITH PASSWORD 'Kothrud@2021';
+
+sudo mkdir web1
+sudo unzip webapp.zip -d web1
 cd web1
-npm install
+sudo npm install
