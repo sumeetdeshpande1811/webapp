@@ -35,7 +35,15 @@ variable "instance_type" {
 
 source "amazon-ebs" "debian" {
   ami_name      = "Ami_${formatdate("YYYY_MM_DD_hh_mm_ss", timestamp())}"
-  source_ami    = "${var.source_ami}"
+    source_ami_filter {
+    filters = {
+      name                = "debian-12-amd64-*"
+      root-device-type    = "ebs"
+      virtualization-type = "hvm"
+    }
+    most_recent = true
+    owners      = ["amazon"]
+  }
   instance_type = "${var.instance_type}"
   region        = "${var.aws_region}"
   profile       = "${var.aws_profile}"
