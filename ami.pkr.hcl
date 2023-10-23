@@ -111,15 +111,15 @@ build {
     destination = "~/webapp.zip"
   }
 
-    provisioner "file" {
-    source      = "scripts/webapp.service"
+  provisioner "file" {
+    source      = "script/webapp.service"
     destination = "/tmp/webapp.service"
   }
 
   provisioner "shell" {
     scripts = [
       "./setup.sh",
-       "script/systemd_install.sh",
+      "script/systemd_install.sh",
     ]
   }
 }
