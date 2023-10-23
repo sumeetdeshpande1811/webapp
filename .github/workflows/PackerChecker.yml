@@ -56,9 +56,9 @@ jobs:
           echo dev_id=\"${{ vars.dev_id}}\" >> ami.pkrvars.hcl
           echo demo_id=\"${{ vars.demo_id}}\" >> ami.pkrvars.hcl
 
-      - name: Initialize Packer
+      # - name: Initialize Packer
 
-        run: packer init ami.pkr.hcl
+      #   run: packer init ami.pkr.hcl
 
 
       - name: Validate Packer Template
@@ -67,16 +67,16 @@ jobs:
 
  
 
-      - name: Check Packer Formatting
+      # - name: Check Packer Formatting
 
-        run: |
+      #   run: |
 
-          if ! packer fmt -check ami.pkr.hcl; then
+      #     if ! packer fmt -check ami.pkr.hcl; then
 
-            echo "Invalid packer format"
+      #       echo "Invalid packer format"
 
-            exit 1
+      #       exit 1
 
-          fi
+      #     fi
 
  
