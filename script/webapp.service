@@ -1,0 +1,14 @@
+[Unit]
+Description=Webapp - Running the webapp on start
+Documentation=https://github.com/csye6225-sumeet-deshpande/webapp
+After=network.target
+
+[Service]
+Type=simple
+User=admin
+ExecStart=/usr/bin/node /home/admin/webapp/index.js
+EnvironmentFile=/home/admin/webapp/.env
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
