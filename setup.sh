@@ -5,11 +5,11 @@ sudo apt update
 sudo apt upgrade -y
 sudo apt install -y unzip
 # Install PostgreSQL and related packages
-sudo apt install -y postgresql postgresql-contrib
+# sudo apt install -y postgresql postgresql-contrib
 
 # Start and enable PostgreSQL service
-sudo systemctl start postgresql
-sudo systemctl enable postgresql
+# sudo systemctl start postgresql
+# sudo systemctl enable postgresql
 
 # Install Node.js and npm
 sudo apt install -y nodejs
@@ -25,8 +25,8 @@ echo "+-------------------------------------------------------------------------
 
 ls 
 
-echo "alter postgres user password"
-sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'Kothrud@2021';"
+# echo "alter postgres user password"
+# sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'Kothrud@2021';"
 
 sudo mkdir webapp
 sudo unzip webapp.zip -d webapp
