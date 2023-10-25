@@ -7,9 +7,10 @@ After=network.target
 WorkingDirectory=/home/admin/webapp/
 Type=simple
 User=sumeet
+Group=webappgroup
 ExecStart=/usr/bin/node /home/admin/webapp/index.js
 EnvironmentFile=/home/admin/webapp/.env
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=cloud-init.target
