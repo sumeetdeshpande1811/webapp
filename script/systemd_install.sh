@@ -1,4 +1,4 @@
-sudo cp /tmp/webapp.service /lib/systemd/system/webapp.service
+sudo cp /tmp/webapp.service /etc/systemd/system/webapp.service
 echo "Service File successfully copied"
 sudo systemctl daemon-reload
 sudo systemctl start webapp
