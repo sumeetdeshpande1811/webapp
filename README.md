@@ -26,7 +26,7 @@ These instructions will help you set up and deploy the web application locally.
 
 ### Application contains the following endpoint
 - GET /healthz - To check the health of the webapp
-- POST /v1/assignments - To create a new assignment
+- POST /v1/assignments - To create a new assignments
 - GET /v1/assignments - To receive all assignments information
 - GET /v1/assignments/:id - To receive assignment information
 - PUT /v1/assignments/:id - To update assignment information
