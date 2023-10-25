@@ -74,7 +74,7 @@ sudo apt upgrade -y
 sudo apt install -y nodejs npm
 node -v
 sudo apt-get install -y zip unzip
- 
+
 cd /opt
 sudo unzip webapp.zip -d csye6225
 cd csye6225
@@ -82,5 +82,6 @@ sudo ls -la
 sudo npm i
  
 sudo apt-get remove -y git
+
  
  
