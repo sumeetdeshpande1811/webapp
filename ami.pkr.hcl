@@ -106,13 +106,13 @@ build {
     "source.amazon-ebs.debian"
   ]
 
-  provisioner "file" {
-    source      = "webapp.zip"
+   provisioner "file" {
+    source = "webapp.zip"
     destination = "/tmp/webapp.zip"
   }
-
+ 
   provisioner "file" {
-    source      = "script/webapp.service"
+    source      = "scripts/webapp.service"
     destination = "/tmp/webapp.service"
   }
 
