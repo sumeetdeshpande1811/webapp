@@ -65,22 +65,22 @@
 # sudo chmod 600 /home/admin/webapp/.env
 
 
-sudo cp /tmp/webapp.zip /opt/csye6225/webapp.zip
+sudo cp /tmp/webapp.zip /opt/webapp.zip
  
 sudo groupadd csye6225
 sudo useradd -s /bin/false -g csye6225 -d /opt/csye6225 -m csye6225
- 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y nodejs
-sudo apt install -y npm
-sudo apt install -y unzip
-sudo apt-get -y remove git
-nodejs -v
+sudo apt install -y nodejs npm
+node -v
+sudo apt-get install -y zip unzip
  
-cd /opt/csye6225
-sudo unzip webapp.zip
+cd /opt
+sudo unzip webapp.zip -d csye6225
+cd csye6225
 sudo ls -la
-sudo npm install
+sudo npm i
+ 
+sudo apt-get remove -y git
  
  
