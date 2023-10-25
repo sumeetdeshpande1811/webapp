@@ -4,6 +4,7 @@ Documentation=https://github.com/csye6225-sumeet-deshpande/webapp
 After=network.target
 
 [Service]
+WorkingDirectory=/home/admin/webapp/
 Type=simple
 User=sumeet
 ExecStart=/usr/bin/node /home/admin/webapp/index.js
