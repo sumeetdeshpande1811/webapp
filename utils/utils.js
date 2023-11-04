@@ -1,5 +1,7 @@
 const Account=require('../models/Account');
 const Sequelize=require('sequelize')
+const appRootPath = require('app-root-path')
+const winston= require('winston')
 const handleError = (error, response) => {
     let errorCode = 400
     if (error == "ID and username do not match" || error == "Provide Basic Auth Credentials"  ) {
@@ -84,6 +86,15 @@ const handleError = (error, response) => {
   
   };
 
-module.exports={handleError,setResponseHeader};
+  console.log(appRootPath + '/logs/combined.log');
+  const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.simple(),
+    transports: [
+        new winston.transports.File({ filename: appRootPath + '/logs/combined.log' }),
+    ],
+})
+
+module.exports={handleError,setResponseHeader,logger};
 
 

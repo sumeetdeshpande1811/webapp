@@ -119,6 +119,7 @@ build {
   provisioner "shell" {
     scripts = [
       "./setup.sh",
+      "script/cloudwatch.sh"
       "script/systemd_install.sh",
     ]
   }

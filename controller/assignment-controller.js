@@ -2,7 +2,7 @@ const {handleError}=require('../utils/utils');
 const sequelize = require('../utils/config');
 const {Assignment}=require('../models/Assignment');
 const Account = require('../models/Account');
-const {setResponseHeader}=require('../utils/utils')
+const {setResponseHeader,logger}=require('../utils/utils')
 const createAssignment = async(req, res) => {
   setResponseHeader(res);
     console.log("in the assignment"+req);
@@ -97,6 +97,7 @@ const createAssignment = async(req, res) => {
         },
       })
       console.log(account.id)
+      logger.info("Received GET: /v1/assignment");
       const assignment = await Assignment.findAll()
       console.log("Filter Assignment:",assignment);
       //if (assignment.length === 0) return res.status(200).send(assignment)
@@ -138,6 +139,7 @@ const createAssignment = async(req, res) => {
         return res.status(400).send({message:"Bad request"});;
       }
       console.log("account:");
+      logger.info("Received GET: /v1/assignment");
       const validDocID = /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(
         req.params.id
       );
