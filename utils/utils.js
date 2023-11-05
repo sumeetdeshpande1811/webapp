@@ -65,6 +65,7 @@ const handleError = (error, response) => {
 
 
  const setResponseHeader = (res) => {
+    logger.info("Setting response header");
 
     res.setHeader("Access-Control-Allow-Credentials", "true");
   
@@ -87,6 +88,7 @@ const handleError = (error, response) => {
   };
 
   console.log(appRootPath + '/logs/combined.log');
+
   const logger = winston.createLogger({
     level: 'info',
     format: winston.format.simple(),
