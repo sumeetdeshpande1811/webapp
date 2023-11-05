@@ -3,8 +3,14 @@ const sequelize = require('../utils/config');
 const {Assignment}=require('../models/Assignment');
 const Account = require('../models/Account');
 const {setResponseHeader,logger}=require('../utils/utils')
+const statsd = require('node-statsd')
+const client = new statsd({
+  host: 'localhost',
+  port: 8125,
+})
 const createAssignment = async(req, res) => {
   setResponseHeader(res);
+  client.increment('endpoint.create.assignment')
     console.log("in the assignment"+req);
    // Assignment.sequelize.sync();
     // Validate request
@@ -52,6 +58,7 @@ const createAssignment = async(req, res) => {
     }
    
     console.log("Userdata.id=",userdata.id);
+    logger.info("Received POST: /v1/assignment");
     const assignment = {
       user_id :userdata.id,
       name: req.body.name,
@@ -81,9 +88,8 @@ const createAssignment = async(req, res) => {
 
   const getAssignment = async(req, res) => {
     setResponseHeader(res);
+    client.increment('endpoint.get.assignment')
     try{
-      //const assignment = await Assignment.findAll();
-      // const acc = await auth.parse( req.headers.authorization)
       if(req.body && Object.keys(req.body).length>0)
       {
         return res.status(400).send({ message: 'Bad Request!' });
@@ -127,6 +133,7 @@ const createAssignment = async(req, res) => {
 
   const getAssignmentById = async(req, res) => {
     setResponseHeader(res);
+    client.increment('endpoint.get.assignmentbyId')
     try{
      // const assignment = await Assignment.findAll();
      console.log("Acooubnt tb",req.params.id);
@@ -139,7 +146,7 @@ const createAssignment = async(req, res) => {
         return res.status(400).send({message:"Bad request"});;
       }
       console.log("account:");
-      logger.info("Received GET: /v1/assignment");
+      logger.info("Received GET: /v1/assignment/:id");
       const validDocID = /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(
         req.params.id
       );
@@ -199,6 +206,7 @@ const createAssignment = async(req, res) => {
 
   const deleteAssignment = async(req, res) => {
     setResponseHeader(res);
+    client.increment('endpoint.delete.assignmentbyId')
     if(req.body && Object.keys(req.body).length>0)
       {
         return res.status(400).send({message:"Bad request"});
@@ -228,7 +236,7 @@ const createAssignment = async(req, res) => {
         
       if (assignment === null)
         return res.status(404).send({ message: 'Not Found!' })
-      console.log("Assignment:::::",assignment)
+        logger.info("Received Delete: /v1/assignments/:id");
       const { name, user_id } = assignment
       try {
         if (id === user_id) {
@@ -309,6 +317,7 @@ const createAssignment = async(req, res) => {
   // };
   const updateAssignment = async (req, res) => {
     setResponseHeader(res);
+    client.increment('endpoint.update.assignmentbyId')
     if (Object.keys(req.body).length === 0) 
       {
         return res.status(400).send({message:"Bad request"});
@@ -368,6 +377,7 @@ const createAssignment = async(req, res) => {
   
       // Create an object to hold the updated fields from the request body
       const updatedFields = {};
+      logger.info("Received PUT: /v1/assignment/:id");
   
       if (req.body.name !== undefined) {
         updatedFields.name = req.body.name;
