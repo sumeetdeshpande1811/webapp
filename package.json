@@ -4,7 +4,7 @@
   "description": "Assignment 3",
   "main": "index.js",
   "scripts": {
-    "test": "jest --exit"
+    "test": "jest --forceExit"
   },
   "author": "",
   "license": "ISC",
