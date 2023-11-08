@@ -3,14 +3,14 @@ const sequelize = require('../utils/config');
 const {Assignment}=require('../models/Assignment');
 const Account = require('../models/Account');
 const {setResponseHeader,logger}=require('../utils/utils')
-const statsd = require('node-statsd')
-const client = new statsd({
-  host: process.env.stathost || 'localhost',
-  port: process.env.statport || 8125,
-})
+// const statsd = require('node-statsd')
+// const client = new statsd({
+//   host: process.env.stathost || 'localhost',
+//   port: process.env.statport || 8125,
+// })
 const createAssignment = async(req, res) => {
   setResponseHeader(res);
-  client.increment('endpoint.create.assignment')
+  //client.increment('endpoint.create.assignment')
     console.log("in the assignment"+req);
    // Assignment.sequelize.sync();
     // Validate request
@@ -20,9 +20,11 @@ const createAssignment = async(req, res) => {
       },
     })
     if (!req.body) {
+      logger.warn("Bad Request for /v1/assignments");
       return res.status(400).send({ message: 'Bad Request!' });;
     }
     else if(req.query && Object.keys(req.query).length>0){
+      logger.warn("Bad Request for /v1/assignments");
       return res.status(400).send({message:"Bad request"});;
     }
       const requiredkeys = [
@@ -41,19 +43,23 @@ const createAssignment = async(req, res) => {
     ];
     for (const key of requiredkeys) {
       if (!(key in req.body)) {
+        logger.warn("Bad Request for /v1/assignments");
        return  res.status(400).send({ message: 'Bad Request!' }); 
       }
     }
     // Check if there are any extra keys
     for (const key in req.body) {
     if (!allowedKeys.includes(key)) {
+      logger.warn("Bad Request for /v1/assignments");
      return  res.status(400).send({ message: 'Bad Request!' });
     }
   }
     if (typeof req.body !== 'object') {
+      logger.warn("Bad Request for /v1/assignments");
       return res.status(400).json({ error: 'Invalid JSON in request body' });
     }
     else if(req.query && Object.keys(req.query).length>0){
+      logger.warn("Bad Request for /v1/assignments");
       return res.status(400).send({ message: 'Bad Request!' });
     }
    
@@ -88,13 +94,15 @@ const createAssignment = async(req, res) => {
 
   const getAssignment = async(req, res) => {
     setResponseHeader(res);
-    client.increment('endpoint.get.assignment')
+    //client.increment('endpoint.get.assignment')
     try{
       if(req.body && Object.keys(req.body).length>0)
       {
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(400).send({ message: 'Bad Request!' });
       }
       else if(req.query && Object.keys(req.query).length>0){
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(400).send({ message: 'Bad Request!' });;
       }
       const account=await Account.findOne({
@@ -125,6 +133,7 @@ const createAssignment = async(req, res) => {
     return res.status(200).json(result)
     }catch(e){
       console.log(e);
+      logger.warn("Bad Request for /v1/assignments");
       return res.status(400).send({ message: 'Bad Request!!' })
     }
     
@@ -133,24 +142,26 @@ const createAssignment = async(req, res) => {
 
   const getAssignmentById = async(req, res) => {
     setResponseHeader(res);
-    client.increment('endpoint.get.assignmentbyId')
+    //client.increment('endpoint.get.assignmentbyId')
     try{
      // const assignment = await Assignment.findAll();
      console.log("Acooubnt tb",req.params.id);
        //const acc = await auth.parse( req.headers.authorization)
       if(req.body && Object.keys(req.body).length>0)
       {
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(400).send({message:"Bad request"});
       }
       else if(req.query && Object.keys(req.query).length>0){
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(400).send({message:"Bad request"});;
       }
-      console.log("account:");
       logger.info("Received GET: /v1/assignment/:id");
       const validDocID = /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(
         req.params.id
       );
       if (!validDocID) {
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(404).send({ message: 'Check the Assignment ID' });
       }
       const account=await Account.findOne({
@@ -165,6 +176,7 @@ const createAssignment = async(req, res) => {
         }
       })
       if(assignment===null){
+        logger.warn("Page not found for /v1/assignments");
         return res.status(404).send({ message: 'Not found' });
       }
       console.log("assig-----nment",assignment);
@@ -197,6 +209,7 @@ const createAssignment = async(req, res) => {
     // return res.status(201).json(result)
     }catch(e){
       console.log("ErROR===",e);
+      logger.warn("Bad Request for /v1/assignments");
       return res.status(400).send({ message: 'Bad Request!!' })
     }
     
@@ -206,12 +219,14 @@ const createAssignment = async(req, res) => {
 
   const deleteAssignment = async(req, res) => {
     setResponseHeader(res);
-    client.increment('endpoint.delete.assignmentbyId')
+    //client.increment('endpoint.delete.assignmentbyId')
     if(req.body && Object.keys(req.body).length>0)
       {
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(400).send({message:"Bad request"});
       }
       else if(req.query && Object.keys(req.query).length>0){
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(400).send({message:"Bad request"});;
       }
     try {
@@ -245,6 +260,7 @@ const createAssignment = async(req, res) => {
           return res.status(403).send({ message: 'Forbidden' })
         }
       } catch (err) {
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(400).send({ message: 'Bad  request!' })
       }
       return res.status(204).send()
@@ -317,12 +333,14 @@ const createAssignment = async(req, res) => {
   // };
   const updateAssignment = async (req, res) => {
     setResponseHeader(res);
-    client.increment('endpoint.update.assignmentbyId')
+    //client.increment('endpoint.update.assignmentbyId')
     if (Object.keys(req.body).length === 0) 
       {
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(400).send({message:"Bad request"});
       }
       else if(req.query && Object.keys(req.query).length>0){
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(400).send({message:"Bad request"});
       }
     try {
@@ -348,12 +366,14 @@ const createAssignment = async(req, res) => {
       ];
       for (const key of requiredkeys) {
         if (!(key in req.body)) {
+          logger.warn("Bad Request for /v1/assignments");
          return  res.status(400).send({ message: 'Bad Request!' }); 
         }
       }
       // Check if there are any extra keys
       for (const key in req.body) {
       if (!allowedKeys.includes(key)) {
+        logger.warn("Bad Request for /v1/assignments");
        return  res.status(400).send({ message: 'Bad Request!' });
       }
     }
@@ -398,13 +418,16 @@ const createAssignment = async(req, res) => {
           await assignment.update(updatedFields);
           return res.status(204).send();
         } else {
+          logger.warn("Forbidden! Trying to access unauthorize record");
           return res.status(403).send({ message: 'Forbidden!' });
         }
       } catch (err) {
+        logger.warn("Bad Request for /v1/assignments");
         return res.status(400).send({ message: err.message|| 'Bad Request'  });
       }
     } catch (err) {
       console.log(err);
+      logger.warn("Bad Request for /v1/assignments");
       return res.status(400).send({ message: err.message || 'Bad Request' });
     }
   };
