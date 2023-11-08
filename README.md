@@ -4,7 +4,7 @@ This repo contains code for webapp as a part of csye6225
  Demo for review asg 6 changes
 
 ## Prerequisites
-Before you begin, ensure you have met the following requirements:
+Before you begin, ensure you have met the following requirement:
 - Git 2.x or higher
 - NPM 8.x or higher
 - NodeJs 16.x or higher
