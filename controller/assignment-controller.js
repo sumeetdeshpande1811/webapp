@@ -62,6 +62,9 @@ const createAssignment = async(req, res) => {
       logger.error("Bad Request for /v1/assignments");
       return res.status(400).send({ message: 'Bad Request!' });
     }
+    if(req.body.num_of_attempts < 1 ){
+      return res.status(400).send({ message: 'num_of_attempts should be greater or equal to 1' });
+    }
    
     console.log("Userdata.id=",userdata.id);
     logger.info("Received POST: /v1/assignment");
@@ -393,6 +396,10 @@ const createAssignment = async(req, res) => {
   
       if (!assignment) {
         return res.status(404).send({ message: 'Not Found!' });
+      }
+
+      if(req.body.num_of_attempts < 1 ){
+        return res.status(400).send({ message: 'num_of_attempts should be greater or equal to 1' });
       }
   
       // Create an object to hold the updated fields from the request body

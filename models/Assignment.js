@@ -59,10 +59,6 @@ const Assignment = sequelize.define('assignments', {
                 args: true,
                 msg: 'Num_of_attempts cannot be an empty',
               },
-            min: {
-              args:1,
-              msg:"Num_of_attempts should be in between 1 & 100"
-            },
             max: {
               args:100,
               msg:"Num_of_attempts should be in between 1 & 100"

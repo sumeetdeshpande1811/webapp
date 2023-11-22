@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const assignmentController = require('../controller/assignment-controller');
+const submissionController=require('../controller/submission-controller');
 const { authorizeToken } = require('../middleware/auth');
 
 const validRoutePattern = /^\/v1\/assignments(\/\w+)*$/;
@@ -42,6 +43,8 @@ router.route('/v1/assignments/:id').delete(authorizeToken,assignmentController.d
 // Update 
 
 router.route('/v1/assignments/:id').put(authorizeToken,assignmentController.updateAssignment)
+
+router.route('/v1/assignments/:id/submission').post(authorizeToken,submissionController.createSubmission);
 
 // router.put('/assignments/:id', assignmentController.updateAssignment);
 // router.delete('/assignments/:id', assignmentController.deleteAssignment);

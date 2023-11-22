@@ -1,7 +1,10 @@
 const Account=require('../models/Account');
+const { SNS } = require('aws-sdk')
 const Sequelize=require('sequelize')
 const appRootPath = require('app-root-path')
 const winston= require('winston')
+const AWS = require('aws-sdk');
+
 const handleError = (error, response) => {
     let errorCode = 400
     if (error == "ID and username do not match" || error == "Provide Basic Auth Credentials"  ) {
@@ -62,7 +65,29 @@ const handleError = (error, response) => {
 //     }
 
 // }
+AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: 'dev' });
+const sns = new SNS({
+    region: process.env.AWS_REGION || 'us-east-1',
+  })
+const TopicArn=process.env.topicARN;
 
+const publishMessage = async (message) => {
+    const params = {
+      Message: JSON.stringify(message),
+      TopicArn,
+    }
+    console.log("@!@!@!@!@!@!@@!",params);
+    try {
+      const messageData = await sns.publish(params).promise()
+      logger.info(
+        `Message ${params.Message} sent to the topic ${params.TopicArn} with id ${messageData.MessageId}`
+      )
+      console.log(`Message ${params.Message} sent to the topic ${params.TopicArn} with id ${messageData.MessageId}`);
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+  
 
  const setResponseHeader = (res) => {
     logger.info("Setting response header");
@@ -97,6 +122,6 @@ const handleError = (error, response) => {
     ],
 })
 
-module.exports={handleError,setResponseHeader,logger};
+module.exports={handleError,setResponseHeader,logger,publishMessage};
 
 
