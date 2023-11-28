@@ -344,7 +344,7 @@ const createAssignment = async(req, res) => {
   // };
   const updateAssignment = async (req, res) => {
     setResponseHeader(res);
-    //client.increment('endpoint.update.assignmentbyId')
+   
     if (Object.keys(req.body).length === 0) 
       {
         logger.error("Bad Request for /v1/assignments");
