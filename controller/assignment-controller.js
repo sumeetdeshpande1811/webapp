@@ -3,6 +3,7 @@ const sequelize = require('../utils/config');
 const {Assignment}=require('../models/Assignment');
 const Account = require('../models/Account');
 const {setResponseHeader,logger}=require('../utils/utils')
+const {Submission}= require('../models/Submission');
 // const statsd = require('node-statsd')
 // const client = new statsd({
 //   host: process.env.stathost || 'localhost',
@@ -62,6 +63,7 @@ const createAssignment = async(req, res) => {
       logger.error("Bad Request for /v1/assignments");
       return res.status(400).send({ message: 'Bad Request!' });
     }
+
     if(req.body.num_of_attempts < 1 ){
       return res.status(400).send({ message: 'num_of_attempts should be greater or equal to 1' });
     }
@@ -76,10 +78,7 @@ const createAssignment = async(req, res) => {
       deadline:req.body.deadline
     };
   
-    // if (assignment.user_id) {
-    //   delete assignment["dataValues"].user_id;
-    // }
-    // Save Assignment in the database
+
     const assg =  await Assignment.create(assignment)
       .then(data => {
         if (data["dataValues"].user_id) {
@@ -222,7 +221,7 @@ const createAssignment = async(req, res) => {
 
   const deleteAssignment = async(req, res) => {
     setResponseHeader(res);
-    //client.increment('endpoint.delete.assignmentbyId')
+   
     if(req.body && Object.keys(req.body).length>0)
       {
         logger.error("Bad Request for /v1/assignments");
@@ -255,6 +254,15 @@ const createAssignment = async(req, res) => {
       if (assignment === null)
         return res.status(404).send({ message: 'Not Found!' })
         logger.info("Received Delete: /v1/assignments/:id");
+
+        const existingSubmissions = await Submission.count({
+          where: {
+            assignment_id: assignment.id,
+          },
+        });
+        if(existingSubmissions >0){
+            return res.status(400).send({ message: 'There are submission against assignment' });
+        }
       const { name, user_id } = assignment
       try {
         if (id === user_id) {

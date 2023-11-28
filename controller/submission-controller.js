@@ -30,9 +30,7 @@ const createSubmission = async(req, res) => {
         email: global.email,
       },
     })
-    if(userdata.id !== assignment.user_id){
-      return res.status(403).send({ message: 'Forbidden' });
-    }
+   
     if(!assignment)
     {
       return res.status(404).send({ message: 'Not found' });
@@ -95,11 +93,24 @@ const createSubmission = async(req, res) => {
     //   TopicArn: "arn:aws:sns:us-east-1:603832434033:email",
     // };
   
-    if(assignment.num_of_attempts<1){
+    const existingSubmissions = await Submission.count({
+      where: {
+        assignment_id: assignment.id,
+        user_id: userdata.id,
+      },
+    });
+
+    console.log("E@#@#@!$@$R@#R@!$RR$@!$R#FR#ETEQFWFGWGG",existingSubmissions, assignment.num_of_attempts);
+
+    if(existingSubmissions >= assignment.num_of_attempts){
         return res.status(400).send({ message: 'No Attempts left' });
     }
+    if (new Date() > new Date(assignment.deadline)) {
+      return res.status(400).json({ message: 'No Assignment submission after the deadline' });
+    }
     const submission = {
-     assignment_id :assignment.id,
+     assignment_id : assignment.id,
+     user_id : userdata.id,
      submission_url : req.body.submission_url,
      submission_date:currentDate.toISOString(),
      assignment_updated:currentDate.toISOString()
@@ -112,24 +123,27 @@ const createSubmission = async(req, res) => {
           delete data["dataValues"].user_id;
         }
         const num_attempts=assignment.num_of_attempts;
-        if(num_attempts<1)
+        if(existingSubmissions >=  num_attempts)
         {
           return res.status(400).send({ message: 'No Attempts left' });
         }
        
-        Assignment.update(
-          {
-            num_of_attempts:num_attempts-1
-          },
-          { // Clause
-              where: 
-              {
-                  id: req.params.id
-              }
-          }
-      ).then(count => {
-          console.log('Rows updated ' + count);
-      });
+      //   Assignment.update(
+      //     {
+      //       num_of_attempts:num_attempts-1
+      //     },
+      //     { // Clause
+      //         where: 
+      //         {
+      //             id: req.params.id
+      //         }
+      //     }
+      // ).then(count => {
+      //     console.log('Rows updated ' + count);
+      // });
+       
+      
+      
         await publishMessage(msg);
         return res.status(201).json(data)
       })
