@@ -5,7 +5,8 @@ const assignmentController = require('../controller/assignment-controller');
 const submissionController=require('../controller/submission-controller');
 const { authorizeToken } = require('../middleware/auth');
 
-const validRoutePattern = /^\/v1\/assignments(\/\w+)*$/;
+const validRoutePattern = /^\/v1\/assignments(\/\w+)*(\/submission)?$/;
+
 
 
 const validateRoute = (req, res, next) => {
@@ -24,7 +25,18 @@ const validateMethod = (req, res, next) => {
   }
 };
 
+const validateMethod1 = (req, res, next) => {
+  if (req.method === 'POST') {
+    next();
+  } else {
+    return res.status(405).send({ message: 'Method Not Allowed' });
+  }
+};
+
+router.all('/v1/assignments/:id/submission', validateMethod1);
+
 router.all('/v1/assignments*', validateMethod);
+
 
 
 //clearrouter.get('/v1/assignments',assignmentController.createAssignment);
