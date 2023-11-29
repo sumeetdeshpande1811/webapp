@@ -31,3 +31,5 @@ These instruction will help you set up and deploy the web applications
 - GET /v1/assignments/:id - To receive assignment information
 - PUT /v1/assignments/:id - To update assignment information
 - DELETE /v1/assignments/:id - To delete assignment information
+
+### Added lambda and users
