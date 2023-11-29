@@ -140,7 +140,7 @@ const createSubmission = async(req, res) => {
 const isValidURL = (inputURL) => {
   try {
       const parsedURL = new URL(inputURL);
-      return parsedURL.protocol === 'http:' || parsedURL.protocol === 'https:' && parsedURL.pathname.toLowerCase().endsWith('.zip');
+      return parsedURL.protocol === 'http:' || parsedURL.protocol === 'https:' && parsedURL.pathname.endsWith('.zip');
   } catch (error) {
       return false;
   }
