@@ -157,7 +157,7 @@ jobs:
 
         run: packer build --var-file=ami.pkrvars.hcl ami.pkr.hcl
 
-       - name: Configure AWS credentials for DEMO account
+      - name: Configure AWS credentials for DEMO account
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEMO }}
@@ -165,7 +165,7 @@ jobs:
           aws-region: us-east-1
       
        - name: Update AWS Launch Template Config and Refresh Instances
-        run: |
+         run: |
 
           # Install jq to parse JSON data and map it to the shell variable
           sudo apt-get install jq
