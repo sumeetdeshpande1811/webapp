@@ -32,6 +32,6 @@ These instruction will help you set up and deploy the web applications
 - PUT /v2/assignments/:id - To update assignment information
 - DELETE /v2/assignments/:id - To delete assignment information
 
-### Added Script 
+### Added certificate 
 
 - aws acm import-certificate --certificate file://Certificate.pem --certificate-chain file://CertificateChain.pem --private-key file://PrivateKey.pem --profile demo
