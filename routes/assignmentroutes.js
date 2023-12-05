@@ -5,7 +5,7 @@ const assignmentController = require('../controller/assignment-controller');
 const submissionController=require('../controller/submission-controller');
 const { authorizeToken } = require('../middleware/auth');
 
-const validRoutePattern = /^\/v2\/assignments(\/\w+)*(\/submission)?$/;
+const validRoutePattern = /^\/demo\/assignments(\/\w+)*(\/submission)?$/;
 
 
 
@@ -33,30 +33,30 @@ const validateMethod1 = (req, res, next) => {
   }
 };
 
-router.all('/v2/assignments/:id/submission', validateMethod1);
+router.all('/demo/assignments/:id/submission', validateMethod1);
 
-router.all('/v2/assignments*', validateMethod);
+router.all('/demo/assignments*', validateMethod);
 
 
 
 //clearrouter.get('/v1/assignments',assignmentController.createAssignment);
-router.route('/v2/assignments').get(authorizeToken,assignmentController.getAssignment);
+router.route('/demo/assignments').get(authorizeToken,assignmentController.getAssignment);
 
 //By ID
-router.route('/v2/assignments/:id').get(authorizeToken,assignmentController.getAssignmentById);
+router.route('/demo/assignments/:id').get(authorizeToken,assignmentController.getAssignmentById);
 
 //POST method##
-router.route('/v2/assignments').post(authorizeToken,assignmentController.createAssignment);
+router.route('/demo/assignments').post(authorizeToken,assignmentController.createAssignment);
  
 //Delete routes
 
-router.route('/v2/assignments/:id').delete(authorizeToken,assignmentController.deleteAssignment);
+router.route('/demo/assignments/:id').delete(authorizeToken,assignmentController.deleteAssignment);
 
 // Update 
 
-router.route('/v2/assignments/:id').put(authorizeToken,assignmentController.updateAssignment)
+router.route('/demo/assignments/:id').put(authorizeToken,assignmentController.updateAssignment)
 
-router.route('/v2/assignments/:id/submission').post(authorizeToken,submissionController.createSubmission);
+router.route('/demo/assignments/:id/submission').post(authorizeToken,submissionController.createSubmission);
 
 // router.put('/assignments/:id', assignmentController.updateAssignment);
 // router.delete('/assignments/:id', assignmentController.deleteAssignment);
