@@ -75,12 +75,12 @@ variable "aws_region" {
 
 variable "AWS_ACCESS_KEY_ID" {
   type    = string
-  default = "AKIA2UABALWSAMFCJKE5"
+  default = ""
 }
 
 variable "AWS_SECRET_ACCESS_KEY" {
   type    = string
-  default = "VlxZp2u5nYjNh0Uxox25cqlB8yqjyAmpiwiZkZWH"
+  default = ""
 }
 
 
